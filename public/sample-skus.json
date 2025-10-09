@@ -1,37 +1,212 @@
 [
   {
-    "sku_code": "NAVY-SHIRT-001",
-    "color": "navy blue",
-    "type": "shirt",
-    "brand": "Example Brand",
-    "description": "Navy blue cotton dress shirt"
-  },
-  {
-    "sku_code": "BLACK-PANTS-002",
+    "sku_code": "NORD-6234891-BLK",
     "color": "black",
-    "type": "pants",
-    "brand": "Example Brand",
-    "description": "Black formal trousers"
+    "type": "dress",
+    "brand": "Nordstrom",
+    "description": "Black cocktail dress with v-neck"
   },
   {
-    "sku_code": "WHITE-TSHIRT-003",
+    "sku_code": "NORD-5829103-NVY",
+    "color": "navy",
+    "type": "blazer",
+    "brand": "Nordstrom",
+    "description": "Navy blue wool blend blazer"
+  },
+  {
+    "sku_code": "NORD-7142356-WHT",
     "color": "white",
-    "type": "t-shirt",
-    "brand": "Example Brand",
-    "description": "White cotton t-shirt"
+    "type": "shirt",
+    "brand": "Nordstrom",
+    "description": "White cotton button-down shirt"
   },
   {
-    "sku_code": "BLUE-JEANS-004",
+    "sku_code": "NORD-8391247-GRY",
+    "color": "gray",
+    "type": "pants",
+    "brand": "Nordstrom",
+    "description": "Gray wool dress pants"
+  },
+  {
+    "sku_code": "NORD-4567821-BLU",
     "color": "blue",
     "type": "jeans",
-    "brand": "Example Brand",
-    "description": "Blue denim jeans"
+    "brand": "Nordstrom",
+    "description": "Blue denim straight-leg jeans"
   },
   {
-    "sku_code": "GRAY-JACKET-005",
-    "color": "gray",
+    "sku_code": "NORD-9283745-BEG",
+    "color": "beige",
+    "type": "coat",
+    "brand": "Nordstrom",
+    "description": "Beige trench coat"
+  },
+  {
+    "sku_code": "NORD-3456892-RED",
+    "color": "red",
+    "type": "sweater",
+    "brand": "Nordstrom",
+    "description": "Red cashmere sweater"
+  },
+  {
+    "sku_code": "NORD-7891234-TAN",
+    "color": "tan",
     "type": "jacket",
-    "brand": "Example Brand",
-    "description": "Gray casual jacket"
+    "brand": "Nordstrom",
+    "description": "Tan leather jacket"
+  },
+  {
+    "sku_code": "UO-BLK-TS-92847",
+    "color": "black",
+    "type": "t-shirt",
+    "brand": "Urban Outfitters",
+    "description": "Black graphic t-shirt"
+  },
+  {
+    "sku_code": "UO-WHT-TS-83926",
+    "color": "white",
+    "type": "t-shirt",
+    "brand": "Urban Outfitters",
+    "description": "White oversized t-shirt"
+  },
+  {
+    "sku_code": "UO-BLU-JN-45678",
+    "color": "blue",
+    "type": "jeans",
+    "brand": "Urban Outfitters",
+    "description": "Blue distressed skinny jeans"
+  },
+  {
+    "sku_code": "UO-GRN-JK-67834",
+    "color": "green",
+    "type": "jacket",
+    "brand": "Urban Outfitters",
+    "description": "Green bomber jacket"
+  },
+  {
+    "sku_code": "UO-BLK-DN-23984",
+    "color": "black",
+    "type": "dress",
+    "brand": "Urban Outfitters",
+    "description": "Black midi dress"
+  },
+  {
+    "sku_code": "UO-RED-SW-78392",
+    "color": "red",
+    "type": "sweater",
+    "brand": "Urban Outfitters",
+    "description": "Red cropped sweater"
+  },
+  {
+    "sku_code": "UO-BLU-SH-45982",
+    "color": "blue",
+    "type": "shirt",
+    "brand": "Urban Outfitters",
+    "description": "Blue flannel shirt"
+  },
+  {
+    "sku_code": "UO-GRY-HD-92847",
+    "color": "gray",
+    "type": "hoodie",
+    "brand": "Urban Outfitters",
+    "description": "Gray pullover hoodie"
+  },
+  {
+    "sku_code": "UO-BLK-PT-34567",
+    "color": "black",
+    "type": "pants",
+    "brand": "Urban Outfitters",
+    "description": "Black cargo pants"
+  },
+  {
+    "sku_code": "UO-PNK-TP-89234",
+    "color": "pink",
+    "type": "top",
+    "brand": "Urban Outfitters",
+    "description": "Pink crop top"
+  },
+  {
+    "sku_code": "NIKE-DRI-FIT-BLK-892374",
+    "color": "black",
+    "type": "t-shirt",
+    "brand": "Nike",
+    "description": "Black Dri-FIT training shirt"
+  },
+  {
+    "sku_code": "NIKE-DRI-FIT-WHT-729384",
+    "color": "white",
+    "type": "t-shirt",
+    "brand": "Nike",
+    "description": "White Dri-FIT running shirt"
+  },
+  {
+    "sku_code": "NIKE-TECH-GRY-456789",
+    "color": "gray",
+    "type": "pants",
+    "brand": "Nike",
+    "description": "Gray Tech Fleece pants"
+  },
+  {
+    "sku_code": "NIKE-TECH-BLK-823945",
+    "color": "black",
+    "type": "pants",
+    "brand": "Nike",
+    "description": "Black Tech Fleece joggers"
+  },
+  {
+    "sku_code": "NIKE-NSW-BLU-938274",
+    "color": "blue",
+    "type": "hoodie",
+    "brand": "Nike",
+    "description": "Blue NSW pullover hoodie"
+  },
+  {
+    "sku_code": "NIKE-NSW-GRY-345678",
+    "color": "gray",
+    "type": "hoodie",
+    "brand": "Nike",
+    "description": "Gray NSW zip-up hoodie"
+  },
+  {
+    "sku_code": "NIKE-JKT-BLK-892347",
+    "color": "black",
+    "type": "jacket",
+    "brand": "Nike",
+    "description": "Black windrunner jacket"
+  },
+  {
+    "sku_code": "NIKE-JKT-NVY-567234",
+    "color": "navy",
+    "type": "jacket",
+    "brand": "Nike",
+    "description": "Navy lightweight jacket"
+  },
+  {
+    "sku_code": "NIKE-PRO-BLK-723894",
+    "color": "black",
+    "type": "shorts",
+    "brand": "Nike",
+    "description": "Black Pro training shorts"
+  },
+  {
+    "sku_code": "NIKE-DRI-RED-489237",
+    "color": "red",
+    "type": "shirt",
+    "brand": "Nike",
+    "description": "Red Dri-FIT polo shirt"
+  },
+  {
+    "sku_code": "NIKE-SWT-GRN-892347",
+    "color": "green",
+    "type": "sweater",
+    "brand": "Nike",
+    "description": "Green crewneck sweater"
+  },
+  {
+    "sku_code": "NIKE-LEG-BLK-234567",
+    "color": "black",
+    "type": "leggings",
+    "brand": "Nike",
+    "description": "Black training leggings"
   }
 ]
