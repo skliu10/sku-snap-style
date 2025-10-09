@@ -1,0 +1,37 @@
+[
+  {
+    "sku_code": "NAVY-SHIRT-001",
+    "color": "navy blue",
+    "type": "shirt",
+    "brand": "Example Brand",
+    "description": "Navy blue cotton dress shirt"
+  },
+  {
+    "sku_code": "BLACK-PANTS-002",
+    "color": "black",
+    "type": "pants",
+    "brand": "Example Brand",
+    "description": "Black formal trousers"
+  },
+  {
+    "sku_code": "WHITE-TSHIRT-003",
+    "color": "white",
+    "type": "t-shirt",
+    "brand": "Example Brand",
+    "description": "White cotton t-shirt"
+  },
+  {
+    "sku_code": "BLUE-JEANS-004",
+    "color": "blue",
+    "type": "jeans",
+    "brand": "Example Brand",
+    "description": "Blue denim jeans"
+  },
+  {
+    "sku_code": "GRAY-JACKET-005",
+    "color": "gray",
+    "type": "jacket",
+    "brand": "Example Brand",
+    "description": "Gray casual jacket"
+  }
+]
