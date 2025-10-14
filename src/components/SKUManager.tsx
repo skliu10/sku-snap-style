@@ -68,6 +68,48 @@ export const SKUManager = ({ onSkusUploaded }: SKUManagerProps) => {
     }
   };
 
+  const handleLoadSampleSkus = async () => {
+    setIsUploading(true);
+
+    try {
+      const response = await fetch('/sample-skus.json');
+      const skus = await response.json();
+
+      if (!Array.isArray(skus)) {
+        throw new Error("Sample data must contain an array of SKUs");
+      }
+
+      // Insert SKUs into database
+      const { error } = await supabase
+        .from('retailer_skus')
+        .insert(skus.map(sku => ({
+          sku_code: sku.sku_code || sku.sku,
+          color: sku.color,
+          type: sku.type,
+          brand: sku.brand,
+          description: sku.description,
+        })));
+
+      if (error) throw error;
+
+      toast({
+        title: "Success!",
+        description: `Loaded ${skus.length} sample retailer SKUs`,
+      });
+
+      onSkusUploaded();
+    } catch (error) {
+      console.error('Error loading sample SKUs:', error);
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to load sample SKUs",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   const handleMatchSkus = async () => {
     setIsMatching(true);
 
@@ -103,27 +145,50 @@ export const SKUManager = ({ onSkusUploaded }: SKUManagerProps) => {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="text-sm text-muted-foreground mb-2">
-          Expected format: JSON array with sku_code, color, type, brand, description.{" "}
-          <a
-            href="/sample-skus.json"
-            download
-            className="text-primary hover:underline"
-          >
-            Download sample
-          </a>
+        <div className="text-sm text-muted-foreground mb-4">
+          Choose an option to load retailer SKUs into the database
         </div>
         
-        <div>
-          <input
-            type="file"
-            accept=".json"
-            onChange={handleFileUpload}
-            className="hidden"
-            id="sku-upload"
-          />
+        <div className="space-y-3">
+          <div>
+            <input
+              type="file"
+              accept=".json"
+              onChange={handleFileUpload}
+              className="hidden"
+              id="sku-upload"
+            />
+            <Button
+              onClick={() => document.getElementById('sku-upload')?.click()}
+              disabled={isUploading}
+              variant="outline"
+              className="w-full"
+            >
+              {isUploading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Loading...
+                </>
+              ) : (
+                <>
+                  <Upload className="mr-2 h-4 w-4" />
+                  Upload Custom JSON
+                </>
+              )}
+            </Button>
+          </div>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">Or</span>
+            </div>
+          </div>
+
           <Button
-            onClick={() => document.getElementById('sku-upload')?.click()}
+            onClick={handleLoadSampleSkus}
             disabled={isUploading}
             variant="outline"
             className="w-full"
@@ -131,34 +196,36 @@ export const SKUManager = ({ onSkusUploaded }: SKUManagerProps) => {
             {isUploading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Uploading...
+                Loading...
               </>
             ) : (
               <>
                 <Upload className="mr-2 h-4 w-4" />
-                Upload Retailer SKUs (JSON)
+                Use Sample SKUs (55 items)
               </>
             )}
           </Button>
         </div>
 
-        <Button
-          onClick={handleMatchSkus}
-          disabled={isMatching}
-          className="w-full gradient-primary"
-        >
-          {isMatching ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Matching...
-            </>
-          ) : (
-            <>
-              <LinkIcon className="mr-2 h-4 w-4" />
-              Match Items to SKUs
-            </>
-          )}
-        </Button>
+        <div className="pt-2">
+          <Button
+            onClick={handleMatchSkus}
+            disabled={isMatching}
+            className="w-full gradient-primary"
+          >
+            {isMatching ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Matching...
+              </>
+            ) : (
+              <>
+                <LinkIcon className="mr-2 h-4 w-4" />
+                Match Items to SKUs
+              </>
+            )}
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );
