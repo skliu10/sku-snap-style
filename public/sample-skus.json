@@ -42,20 +42,6 @@
     "description": "Beige trench coat"
   },
   {
-    "sku_code": "NORD-3456892-RED",
-    "color": "red",
-    "type": "sweater",
-    "brand": "Nordstrom",
-    "description": "Red cashmere sweater"
-  },
-  {
-    "sku_code": "NORD-7891234-TAN",
-    "color": "tan",
-    "type": "jacket",
-    "brand": "Nordstrom",
-    "description": "Tan leather jacket"
-  },
-  {
     "sku_code": "UO-BLK-TS-92847",
     "color": "black",
     "type": "t-shirt",
@@ -84,60 +70,11 @@
     "description": "Green bomber jacket"
   },
   {
-    "sku_code": "UO-BLK-DN-23984",
-    "color": "black",
-    "type": "dress",
-    "brand": "Urban Outfitters",
-    "description": "Black midi dress"
-  },
-  {
-    "sku_code": "UO-RED-SW-78392",
-    "color": "red",
-    "type": "sweater",
-    "brand": "Urban Outfitters",
-    "description": "Red cropped sweater"
-  },
-  {
-    "sku_code": "UO-BLU-SH-45982",
-    "color": "blue",
-    "type": "shirt",
-    "brand": "Urban Outfitters",
-    "description": "Blue flannel shirt"
-  },
-  {
-    "sku_code": "UO-GRY-HD-92847",
-    "color": "gray",
-    "type": "hoodie",
-    "brand": "Urban Outfitters",
-    "description": "Gray pullover hoodie"
-  },
-  {
-    "sku_code": "UO-BLK-PT-34567",
-    "color": "black",
-    "type": "pants",
-    "brand": "Urban Outfitters",
-    "description": "Black cargo pants"
-  },
-  {
-    "sku_code": "UO-PNK-TP-89234",
-    "color": "pink",
-    "type": "top",
-    "brand": "Urban Outfitters",
-    "description": "Pink crop top"
-  },
-  {
     "sku_code": "NIKE-DRI-FIT-BLK-892374",
     "color": "black",
     "type": "t-shirt",
     "brand": "Nike",
     "description": "Black Dri-FIT training shirt"
-  },
-  {
-    "sku_code": "NIKE-DRI-FIT-WHT-729384",
-    "color": "white",
-    "type": "t-shirt",
-    "brand": "Nike",
-    "description": "White Dri-FIT running shirt"
   },
   {
     "sku_code": "NIKE-TECH-GRY-456789",
@@ -147,13 +84,6 @@
     "description": "Gray Tech Fleece pants"
   },
   {
-    "sku_code": "NIKE-TECH-BLK-823945",
-    "color": "black",
-    "type": "pants",
-    "brand": "Nike",
-    "description": "Black Tech Fleece joggers"
-  },
-  {
     "sku_code": "NIKE-NSW-BLU-938274",
     "color": "blue",
     "type": "hoodie",
@@ -161,52 +91,262 @@
     "description": "Blue NSW pullover hoodie"
   },
   {
-    "sku_code": "NIKE-NSW-GRY-345678",
-    "color": "gray",
-    "type": "hoodie",
-    "brand": "Nike",
-    "description": "Gray NSW zip-up hoodie"
-  },
-  {
-    "sku_code": "NIKE-JKT-BLK-892347",
+    "sku_code": "ZARA-3045-892-800",
     "color": "black",
-    "type": "jacket",
-    "brand": "Nike",
-    "description": "Black windrunner jacket"
+    "type": "blazer",
+    "brand": "Zara",
+    "description": "Black tailored blazer"
   },
   {
-    "sku_code": "NIKE-JKT-NVY-567234",
+    "sku_code": "ZARA-2587-345-250",
+    "color": "white",
+    "type": "shirt",
+    "brand": "Zara",
+    "description": "White linen shirt"
+  },
+  {
+    "sku_code": "ZARA-4829-567-401",
+    "color": "blue",
+    "type": "jeans",
+    "brand": "Zara",
+    "description": "Blue slim fit jeans"
+  },
+  {
+    "sku_code": "ZARA-6234-891-702",
+    "color": "beige",
+    "type": "pants",
+    "brand": "Zara",
+    "description": "Beige wide-leg trousers"
+  },
+  {
+    "sku_code": "ZARA-1847-623-427",
+    "color": "red",
+    "type": "dress",
+    "brand": "Zara",
+    "description": "Red midi dress"
+  },
+  {
+    "sku_code": "ZARA-9283-745-330",
+    "color": "navy",
+    "type": "coat",
+    "brand": "Zara",
+    "description": "Navy wool coat"
+  },
+  {
+    "sku_code": "HM-0892347-001",
+    "color": "black",
+    "type": "t-shirt",
+    "brand": "H&M",
+    "description": "Black basic t-shirt"
+  },
+  {
+    "sku_code": "HM-1234567-003",
+    "color": "white",
+    "type": "shirt",
+    "brand": "H&M",
+    "description": "White dress shirt"
+  },
+  {
+    "sku_code": "HM-4567892-045",
+    "color": "blue",
+    "type": "jeans",
+    "brand": "H&M",
+    "description": "Blue skinny jeans"
+  },
+  {
+    "sku_code": "HM-7891234-021",
+    "color": "gray",
+    "type": "sweater",
+    "brand": "H&M",
+    "description": "Gray knit sweater"
+  },
+  {
+    "sku_code": "HM-2345678-089",
+    "color": "green",
+    "type": "jacket",
+    "brand": "H&M",
+    "description": "Green utility jacket"
+  },
+  {
+    "sku_code": "HM-8923456-067",
+    "color": "black",
+    "type": "dress",
+    "brand": "H&M",
+    "description": "Black bodycon dress"
+  },
+  {
+    "sku_code": "GAP-892347-00-BLK",
+    "color": "black",
+    "type": "jeans",
+    "brand": "Gap",
+    "description": "Black straight jeans"
+  },
+  {
+    "sku_code": "GAP-234567-01-BLU",
+    "color": "blue",
+    "type": "jeans",
+    "brand": "Gap",
+    "description": "Blue vintage jeans"
+  },
+  {
+    "sku_code": "GAP-567891-02-WHT",
+    "color": "white",
+    "type": "t-shirt",
+    "brand": "Gap",
+    "description": "White crew neck t-shirt"
+  },
+  {
+    "sku_code": "GAP-789234-03-NVY",
+    "color": "navy",
+    "type": "hoodie",
+    "brand": "Gap",
+    "description": "Navy pullover hoodie"
+  },
+  {
+    "sku_code": "GAP-345678-04-GRY",
+    "color": "gray",
+    "type": "sweater",
+    "brand": "Gap",
+    "description": "Gray cable knit sweater"
+  },
+  {
+    "sku_code": "ADIDAS-GN2891",
+    "color": "black",
+    "type": "pants",
+    "brand": "Adidas",
+    "description": "Black track pants"
+  },
+  {
+    "sku_code": "ADIDAS-HZ3421",
+    "color": "white",
+    "type": "t-shirt",
+    "brand": "Adidas",
+    "description": "White athletic t-shirt"
+  },
+  {
+    "sku_code": "ADIDAS-FM8923",
     "color": "navy",
     "type": "jacket",
-    "brand": "Nike",
-    "description": "Navy lightweight jacket"
+    "brand": "Adidas",
+    "description": "Navy track jacket"
   },
   {
-    "sku_code": "NIKE-PRO-BLK-723894",
+    "sku_code": "ADIDAS-DZ4567",
+    "color": "gray",
+    "type": "hoodie",
+    "brand": "Adidas",
+    "description": "Gray performance hoodie"
+  },
+  {
+    "sku_code": "ADIDAS-GK8923",
     "color": "black",
     "type": "shorts",
-    "brand": "Nike",
-    "description": "Black Pro training shorts"
+    "brand": "Adidas",
+    "description": "Black training shorts"
   },
   {
-    "sku_code": "NIKE-DRI-RED-489237",
-    "color": "red",
-    "type": "shirt",
-    "brand": "Nike",
-    "description": "Red Dri-FIT polo shirt"
-  },
-  {
-    "sku_code": "NIKE-SWT-GRN-892347",
-    "color": "green",
-    "type": "sweater",
-    "brand": "Nike",
-    "description": "Green crewneck sweater"
-  },
-  {
-    "sku_code": "NIKE-LEG-BLK-234567",
+    "sku_code": "LULU-W5AXGS",
     "color": "black",
     "type": "leggings",
-    "brand": "Nike",
-    "description": "Black training leggings"
+    "brand": "Lululemon",
+    "description": "Black Align leggings"
+  },
+  {
+    "sku_code": "LULU-W5BKTR",
+    "color": "navy",
+    "type": "leggings",
+    "brand": "Lululemon",
+    "description": "Navy Wunder Under leggings"
+  },
+  {
+    "sku_code": "LULU-M3CSHT",
+    "color": "white",
+    "type": "t-shirt",
+    "brand": "Lululemon",
+    "description": "White Metal Vent Tech shirt"
+  },
+  {
+    "sku_code": "LULU-W5DJKT",
+    "color": "black",
+    "type": "jacket",
+    "brand": "Lululemon",
+    "description": "Black Define jacket"
+  },
+  {
+    "sku_code": "LULU-M3EPNT",
+    "color": "gray",
+    "type": "pants",
+    "brand": "Lululemon",
+    "description": "Gray ABC pants"
+  },
+  {
+    "sku_code": "MANGO-87345621",
+    "color": "black",
+    "type": "blazer",
+    "brand": "Mango",
+    "description": "Black structured blazer"
+  },
+  {
+    "sku_code": "MANGO-23456789",
+    "color": "white",
+    "type": "shirt",
+    "brand": "Mango",
+    "description": "White satin blouse"
+  },
+  {
+    "sku_code": "MANGO-56789234",
+    "color": "beige",
+    "type": "pants",
+    "brand": "Mango",
+    "description": "Beige linen pants"
+  },
+  {
+    "sku_code": "MANGO-89234567",
+    "color": "red",
+    "type": "dress",
+    "brand": "Mango",
+    "description": "Red wrap dress"
+  },
+  {
+    "sku_code": "MANGO-34567892",
+    "color": "navy",
+    "type": "coat",
+    "brand": "Mango",
+    "description": "Navy double-breasted coat"
+  },
+  {
+    "sku_code": "COS-0987234-BLK",
+    "color": "black",
+    "type": "dress",
+    "brand": "COS",
+    "description": "Black minimalist dress"
+  },
+  {
+    "sku_code": "COS-1234890-WHT",
+    "color": "white",
+    "type": "shirt",
+    "brand": "COS",
+    "description": "White oversized shirt"
+  },
+  {
+    "sku_code": "COS-4567823-GRY",
+    "color": "gray",
+    "type": "sweater",
+    "brand": "COS",
+    "description": "Gray merino wool sweater"
+  },
+  {
+    "sku_code": "COS-7892345-BLU",
+    "color": "blue",
+    "type": "jeans",
+    "brand": "COS",
+    "description": "Blue relaxed jeans"
+  },
+  {
+    "sku_code": "COS-2345678-BEG",
+    "color": "beige",
+    "type": "coat",
+    "brand": "COS",
+    "description": "Beige wool coat"
   }
 ]
