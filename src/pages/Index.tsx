@@ -72,6 +72,48 @@ const Index = () => {
       </div>
 
       <div className="container mx-auto px-4 pb-20">
+        {/* Information Section */}
+        <div className="bg-card rounded-2xl shadow-card p-8 mb-8 border border-border">
+          <h2 className="text-2xl font-semibold mb-6 text-foreground">Understanding Your Results</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="space-y-3">
+              <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-primary"></span>
+                Item Tags
+              </h3>
+              <div className="text-sm text-muted-foreground space-y-2">
+                <p><strong className="text-foreground">Type:</strong> The category of clothing (e.g., Jeans, T-Shirt, Jacket)</p>
+                <p><strong className="text-foreground">Color:</strong> The primary color detected in the item</p>
+                <p><strong className="text-foreground">Condition:</strong> Assessment of the item's state (New, Good, Fair, Poor)</p>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-primary"></span>
+                Confidence Score
+              </h3>
+              <div className="text-sm text-muted-foreground space-y-2">
+                <p><strong className="text-foreground">90-100%:</strong> Excellent match - highly confident</p>
+                <p><strong className="text-foreground">70-89%:</strong> Good match - reliable</p>
+                <p><strong className="text-foreground">50-69%:</strong> Fair match - review recommended</p>
+                <p><strong className="text-foreground">Below 50%:</strong> Low confidence - manual review needed</p>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-primary"></span>
+                SKU System
+              </h3>
+              <div className="text-sm text-muted-foreground space-y-2">
+                <p><strong className="text-foreground">Generated SKU:</strong> Automatically created code based on item attributes (format: COLOR-TYPE)</p>
+                <p><strong className="text-foreground">Matched SKU:</strong> When found, shows the corresponding retailer SKU from your database</p>
+                <p><strong className="text-foreground">Grouping:</strong> Items with identical attributes receive the same SKU for easy inventory management</p>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="grid lg:grid-cols-3 gap-8 mb-12">
           <div className="lg:col-span-2">
             <CameraUpload onAnalysisComplete={fetchItems} />
