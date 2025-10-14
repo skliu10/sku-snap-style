@@ -4,7 +4,8 @@ import { CameraUpload } from "@/components/CameraUpload";
 import { ClothingItem } from "@/components/ClothingItem";
 import { SKUManager } from "@/components/SKUManager";
 import { supabase } from "@/integrations/supabase/client";
-import { Loader2 } from "lucide-react";
+import { Loader2, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import heroBg from "@/assets/hero-bg.jpg";
 
 interface ClothingItemData {
@@ -21,6 +22,7 @@ interface ClothingItemData {
 const Index = () => {
   const [items, setItems] = useState<ClothingItemData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [skuSearchQuery, setSkuSearchQuery] = useState("");
 
   const fetchItems = async () => {
     setIsLoading(true);
@@ -52,6 +54,19 @@ const Index = () => {
     acc[item.generated_sku].push(item);
     return acc;
   }, {} as Record<string, ClothingItemData[]>);
+
+  // Filter SKUs based on search query
+  const filteredSkus = Object.entries(itemsBySku).filter(([sku, skuItems]) => {
+    const searchLower = skuSearchQuery.toLowerCase();
+    return (
+      sku.toLowerCase().includes(searchLower) ||
+      skuItems.some(item => 
+        item.color?.toLowerCase().includes(searchLower) ||
+        item.type?.toLowerCase().includes(searchLower) ||
+        item.matched_retailer_sku?.toLowerCase().includes(searchLower)
+      )
+    );
+  });
 
   return (
     <div className="min-h-screen gradient-mesh">
@@ -220,10 +235,38 @@ const Index = () => {
                   No items yet. Upload a photo to get started!
                 </div>
               ) : (
-                <div className="space-y-8">
-                  {Object.entries(itemsBySku)
-                    .sort(([, a], [, b]) => b.length - a.length)
-                    .map(([sku, skuItems]) => (
+                <div className="space-y-6">
+                  {/* Search Bar */}
+                  <div className="relative max-w-md">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                    <Input
+                      type="text"
+                      placeholder="Search by SKU, color, type, or matched SKU..."
+                      value={skuSearchQuery}
+                      onChange={(e) => setSkuSearchQuery(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
+
+                  {/* Results Count */}
+                  <div className="text-sm text-muted-foreground">
+                    {skuSearchQuery && (
+                      <span>
+                        Found {filteredSkus.length} SKU{filteredSkus.length !== 1 ? 's' : ''} matching "{skuSearchQuery}"
+                      </span>
+                    )}
+                  </div>
+
+                  {/* SKU Groups */}
+                  {filteredSkus.length === 0 && skuSearchQuery ? (
+                    <div className="text-center py-12 text-muted-foreground">
+                      No SKUs found matching your search.
+                    </div>
+                  ) : (
+                    <div className="space-y-8">
+                      {filteredSkus
+                        .sort(([, a], [, b]) => b.length - a.length)
+                        .map(([sku, skuItems]) => (
                       <div key={sku} className="border border-border rounded-lg p-6 bg-background/50">
                         <div className="flex items-center justify-between mb-4">
                           <h3 className="text-xl font-semibold text-foreground">
@@ -247,8 +290,10 @@ const Index = () => {
                             />
                           ))}
                         </div>
-                      </div>
-                    ))}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
             </TabsContent>
