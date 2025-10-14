@@ -44,6 +44,15 @@ const Index = () => {
   const matchedItems = items.filter(item => item.matched_retailer_sku);
   const unmatchedItems = items.filter(item => !item.matched_retailer_sku);
 
+  // Group items by generated SKU
+  const itemsBySku = items.reduce((acc, item) => {
+    if (!acc[item.generated_sku]) {
+      acc[item.generated_sku] = [];
+    }
+    acc[item.generated_sku].push(item);
+    return acc;
+  }, {} as Record<string, ClothingItemData[]>);
+
   return (
     <div className="min-h-screen gradient-mesh">
       {/* Hero Section */}
@@ -75,7 +84,7 @@ const Index = () => {
         {/* Items Display */}
         <div className="bg-card rounded-2xl shadow-card p-8">
           <Tabs defaultValue="all" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
+            <TabsList className="grid w-full grid-cols-4 mb-8">
               <TabsTrigger value="all">
                 All Items ({items.length})
               </TabsTrigger>
@@ -84,6 +93,9 @@ const Index = () => {
               </TabsTrigger>
               <TabsTrigger value="unmatched">
                 Unmatched ({unmatchedItems.length})
+              </TabsTrigger>
+              <TabsTrigger value="by-sku">
+                By SKU ({Object.keys(itemsBySku).length})
               </TabsTrigger>
             </TabsList>
 
@@ -156,6 +168,45 @@ const Index = () => {
                       confidence={item.confidence_score || undefined}
                     />
                   ))}
+                </div>
+              )}
+            </TabsContent>
+
+            <TabsContent value="by-sku">
+              {Object.keys(itemsBySku).length === 0 ? (
+                <div className="text-center py-12 text-muted-foreground">
+                  No items yet. Upload a photo to get started!
+                </div>
+              ) : (
+                <div className="space-y-8">
+                  {Object.entries(itemsBySku)
+                    .sort(([, a], [, b]) => b.length - a.length)
+                    .map(([sku, skuItems]) => (
+                      <div key={sku} className="border border-border rounded-lg p-6 bg-background/50">
+                        <div className="flex items-center justify-between mb-4">
+                          <h3 className="text-xl font-semibold text-foreground">
+                            {sku}
+                          </h3>
+                          <span className="text-sm text-muted-foreground bg-muted px-3 py-1 rounded-full">
+                            {skuItems.length} {skuItems.length === 1 ? 'item' : 'items'}
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                          {skuItems.map((item) => (
+                            <ClothingItem
+                              key={item.id}
+                              imageUrl={item.image_url}
+                              sku={item.generated_sku}
+                              color={item.color || undefined}
+                              type={item.type || undefined}
+                              condition={item.condition || undefined}
+                              matchedSku={item.matched_retailer_sku || undefined}
+                              confidence={item.confidence_score || undefined}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    ))}
                 </div>
               )}
             </TabsContent>
