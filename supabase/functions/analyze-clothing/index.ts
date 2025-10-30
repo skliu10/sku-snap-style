@@ -45,6 +45,7 @@ serve(async (req) => {
 2. Primary color (be specific, e.g., navy blue, burgundy, light gray)
 3. Condition (excellent, good, fair, poor)
 4. Generate a SKU in format: [COLOR]-[TYPE] (e.g., "BLACK-PANTS", "NAVY-TSHIRT")
+5. Generate a confidence level between 0 and 100%
 
 Respond ONLY with valid JSON in this exact format:
 {
@@ -52,7 +53,7 @@ Respond ONLY with valid JSON in this exact format:
   "color": "primary color",
   "condition": "condition assessment",
   "sku": "GENERATED-SKU",
-  "confidence": 0.95
+  "confidence": "confidence level"
 }`
           },
           {
