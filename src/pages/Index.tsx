@@ -6,6 +6,7 @@ import { SKUManager } from "@/components/SKUManager";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 import heroBg from "@/assets/hero-bg.jpg";
 
 interface ClothingItemData {
@@ -23,6 +24,7 @@ const Index = () => {
   const [items, setItems] = useState<ClothingItemData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [skuSearchQuery, setSkuSearchQuery] = useState("");
+  const { toast } = useToast();
 
   const fetchItems = async () => {
     setIsLoading(true);
@@ -42,6 +44,31 @@ const Index = () => {
   useEffect(() => {
     fetchItems();
   }, []);
+
+  const handleDeleteItem = async (itemId: string) => {
+    try {
+      const { error } = await supabase
+        .from('clothing_items')
+        .delete()
+        .eq('id', itemId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Item deleted",
+        description: "The clothing item has been removed.",
+      });
+
+      fetchItems();
+    } catch (error) {
+      console.error('Error deleting item:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete the item. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   const matchedItems = items.filter(item => item.matched_retailer_sku);
   const unmatchedItems = items.filter(item => !item.matched_retailer_sku);
@@ -177,6 +204,7 @@ const Index = () => {
                       condition={item.condition || undefined}
                       matchedSku={item.matched_retailer_sku || undefined}
                       confidence={item.confidence_score || undefined}
+                      onDelete={() => handleDeleteItem(item.id)}
                     />
                   ))}
                 </div>
@@ -200,6 +228,7 @@ const Index = () => {
                       condition={item.condition || undefined}
                       matchedSku={item.matched_retailer_sku || undefined}
                       confidence={item.confidence_score || undefined}
+                      onDelete={() => handleDeleteItem(item.id)}
                     />
                   ))}
                 </div>
@@ -223,6 +252,7 @@ const Index = () => {
                       condition={item.condition || undefined}
                       matchedSku={item.matched_retailer_sku || undefined}
                       confidence={item.confidence_score || undefined}
+                      onDelete={() => handleDeleteItem(item.id)}
                     />
                   ))}
                 </div>
@@ -287,6 +317,7 @@ const Index = () => {
                               condition={item.condition || undefined}
                               matchedSku={item.matched_retailer_sku || undefined}
                               confidence={item.confidence_score || undefined}
+                              onDelete={() => handleDeleteItem(item.id)}
                             />
                           ))}
                         </div>

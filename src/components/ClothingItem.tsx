@@ -1,6 +1,18 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface ClothingItemProps {
   imageUrl: string;
@@ -10,6 +22,7 @@ interface ClothingItemProps {
   condition?: string;
   matchedSku?: string;
   confidence?: number;
+  onDelete?: () => void;
 }
 
 export const ClothingItem = ({
@@ -20,6 +33,7 @@ export const ClothingItem = ({
   condition,
   matchedSku,
   confidence,
+  onDelete,
 }: ClothingItemProps) => {
   return (
     <Card className="overflow-hidden shadow-card transition-smooth hover:shadow-elegant">
@@ -67,6 +81,33 @@ export const ClothingItem = ({
           <div className="text-xs text-muted-foreground">
             Confidence: {(confidence * 100).toFixed(0)}%
           </div>
+        )}
+
+        {onDelete && (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button 
+                variant="destructive" 
+                size="sm" 
+                className="w-full mt-2"
+              >
+                <Trash2 className="w-4 h-4 mr-2" />
+                Delete Item
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This will permanently delete this clothing item (SKU: {sku}). This action cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={onDelete}>Delete</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         )}
       </CardContent>
     </Card>
