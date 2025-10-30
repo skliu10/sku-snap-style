@@ -69,7 +69,8 @@ serve(async (req) => {
           .from('clothing_items')
           .update({ 
             matched_retailer_sku: match.sku_code,
-            confidence_score: 0.95 
+            // Preserve the original analysis confidence score
+            confidence_score: item.confidence_score 
           })
           .eq('id', item.id);
 
