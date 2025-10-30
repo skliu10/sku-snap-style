@@ -105,7 +105,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30" />
         <div className="relative container mx-auto px-4 text-center text-white">
           <h1 className="text-5xl font-bold mb-4">
-            Clothing Recognition & SKU Manager
+            Loop Label
           </h1>
           <p className="text-xl text-white/90 max-w-2xl mx-auto">
             AI-powered clothing categorization with automatic SKU generation and retailer matching
