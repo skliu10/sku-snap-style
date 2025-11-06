@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Upload, Link as LinkIcon, Loader2 } from "lucide-react";
+import { Upload, Link as LinkIcon, Loader2, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -12,6 +12,7 @@ interface SKUManagerProps {
 export const SKUManager = ({ onSkusUploaded }: SKUManagerProps) => {
   const [isUploading, setIsUploading] = useState(false);
   const [isMatching, setIsMatching] = useState(false);
+  const [isScraping, setIsScraping] = useState(false);
   const { toast } = useToast();
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,45 +69,49 @@ export const SKUManager = ({ onSkusUploaded }: SKUManagerProps) => {
     }
   };
 
-  const handleLoadSampleSkus = async () => {
-    setIsUploading(true);
+  const handleScrapeNordstrom = async () => {
+    setIsScraping(true);
 
     try {
-      const response = await fetch('/sample-skus.json');
-      const skus = await response.json();
+      toast({
+        title: "Starting scrape...",
+        description: "Scraping up to 50 Nordstrom products (this may take 2-3 minutes)",
+      });
 
-      if (!Array.isArray(skus)) {
-        throw new Error("Sample data must contain an array of SKUs");
-      }
-
-      // Insert SKUs into database
-      const { error } = await supabase
-        .from('retailer_skus')
-        .insert(skus.map(sku => ({
-          sku_code: sku.sku_code || sku.sku,
-          color: sku.color,
-          type: sku.type,
-          brand: sku.brand,
-          description: sku.description,
-        })));
+      // Call the scrape-nordstrom Edge Function
+      const { data, error } = await supabase.functions.invoke('scrape-nordstrom', {
+        body: {
+          category_url: 'https://www.nordstrom.com/browse/women/dresses',
+          max_products: 50,
+        },
+      });
 
       if (error) throw error;
 
+      if (data.error) {
+        toast({
+          title: "Scraping limitation",
+          description: data.error + (data.suggestion ? ` ${data.suggestion}` : ''),
+          variant: "destructive",
+        });
+        return;
+      }
+
       toast({
-        title: "Success!",
-        description: `Loaded ${skus.length} sample retailer SKUs`,
+        title: "Scraping complete!",
+        description: `Scraped ${data.scraped} products and matched ${data.matched} items`,
       });
 
       onSkusUploaded();
     } catch (error) {
-      console.error('Error loading sample SKUs:', error);
+      console.error('Error scraping Nordstrom:', error);
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to load sample SKUs",
+        description: error instanceof Error ? error.message : "Failed to scrape Nordstrom. The website may require JavaScript rendering.",
         variant: "destructive",
       });
     } finally {
-      setIsUploading(false);
+      setIsScraping(false);
     }
   };
 
@@ -188,20 +193,20 @@ export const SKUManager = ({ onSkusUploaded }: SKUManagerProps) => {
           </div>
 
           <Button
-            onClick={handleLoadSampleSkus}
-            disabled={isUploading}
+            onClick={handleScrapeNordstrom}
+            disabled={isScraping || isUploading}
             variant="outline"
             className="w-full"
           >
-            {isUploading ? (
+            {isScraping ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Loading...
+                Scraping Nordstrom...
               </>
             ) : (
               <>
-                <Upload className="mr-2 h-4 w-4" />
-                Use Sample SKUs (55 items)
+                <Globe className="mr-2 h-4 w-4" />
+                Use Nordstrom SKU Scraper
               </>
             )}
           </Button>
