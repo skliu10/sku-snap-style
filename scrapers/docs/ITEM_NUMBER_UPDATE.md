@@ -1,8 +1,8 @@
-# Item Number Extraction - Update Summary
+# SKU Code Update - Item # as SKU
 
 ## ✅ Implementation Complete
 
-The scraper now extracts Nordstrom's **Item #** and includes it in all JSON and CSV exports.
+The scraper now uses Nordstrom's **Item #** as the SKU code. The Item # is Nordstrom's actual SKU number, so it has been set as the primary `sku_code` field.
 
 ## Changes Made
 
@@ -28,8 +28,7 @@ The scraper now extracts Nordstrom's **Item #** and includes it in all JSON and 
 ```json
 [
   {
-    "sku_code": "NORD-7737947",
-    "item_number": "10249004",
+    "sku_code": "10249004",
     "color": "red",
     "type": "dress",
     "brand": "ASTR the Label",
@@ -38,22 +37,26 @@ The scraper now extracts Nordstrom's **Item #** and includes it in all JSON and 
 ]
 ```
 
+**Note**: The `sku_code` field now contains Nordstrom's Item # (the actual SKU number). The old format `NORD-{product_id}` has been removed.
+
 ### CSV Format
 
-The CSV now includes an `item_number` column:
+The CSV includes the `sku_code` column with Item # values:
 
-| sku_code | item_number | color | type | brand | description | url |
-|----------|-------------|-------|------|-------|-------------|-----|
-| NORD-7737947 | 10249004 | red | dress | ASTR the Label | Maeve Midi Dress | ... |
+| sku_code | color | type | brand | description | url |
+|----------|-------|------|-------|-------------|-----|
+| 10249004 | red | dress | ASTR the Label | Maeve Midi Dress | ... |
 
-## Item # Extraction
+## Item # Extraction (Now Used as SKU)
 
-The Item # is extracted using multiple methods:
+The Item # is extracted and used as the SKU code using multiple methods:
 
 1. **Text Pattern Matching**: Searches for "Item #", "Item Number:", or "Item ID:" followed by a 6+ digit number
 2. **HTML Element Search**: Looks for elements containing Item # text
 3. **Data Attributes**: Checks for `data-item-number` or `data-item-id` attributes
 4. **CSS Selectors**: Attempts to find elements with item-number classes
+
+The extracted Item # is stored in the `sku_code` field, replacing the previous `NORD-{product_id}` format.
 
 ## Testing
 
@@ -73,7 +76,9 @@ The exported JSON/CSV files will now include the `item_number` field.
 
 ## Notes
 
+- The `sku_code` field now contains Nordstrom's Item # (the actual SKU number)
 - Item # may be empty (`""`) if not found on the page
 - Item # is typically an 8-digit number (e.g., "10249004")
-- Item # is different from the product ID in the URL (which becomes `sku_code`)
+- The old `NORD-{product_id}` SKU format has been removed
+- Item # is the official Nordstrom SKU identifier
 

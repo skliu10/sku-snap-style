@@ -20,10 +20,11 @@ def test_data_pipeline():
     print("=" * 50)
     
     # Mock product data as it might come from Nordstrom
+    # Note: sku_code is now the Item # (Nordstrom's SKU number)
     mock_products = [
         {
             'url': 'https://www.nordstrom.com/browse/women/clothing/dress/1234567',
-            'sku_code': 'NORD-1234567',
+            'sku_code': '10249004',  # Item # (Nordstrom SKU)
             'color': 'BLACK',
             'type': 'Dress',
             'brand': 'Nordstrom Signature',
@@ -31,7 +32,7 @@ def test_data_pipeline():
         },
         {
             'url': 'https://www.nordstrom.com/browse/women/clothing/shirt/2345678',
-            'sku_code': 'NORD-2345678',
+            'sku_code': '10257214',  # Item # (Nordstrom SKU)
             'color': 'Navy Blue',
             'type': 'T-Shirt',
             'brand': 'Nordstrom',
@@ -39,7 +40,7 @@ def test_data_pipeline():
         },
         {
             'url': 'https://www.nordstrom.com/browse/women/clothing/pants/3456789',
-            'sku_code': 'NORD-3456789',
+            'sku_code': '10271660',  # Item # (Nordstrom SKU)
             'color': 'Grey',
             'type': 'Jeans',
             'brand': 'Nordstrom Rack',

@@ -80,17 +80,11 @@ class NordstromScraper:
             product = {
                 'url': url,
                 'brand': 'Nordstrom',
-                'sku_code': None,
-                'item_number': None,  # Nordstrom Item #
+                'sku_code': None,  # Will be set to Item # (Nordstrom's SKU)
                 'color': None,
                 'type': None,
                 'description': None
             }
-            
-            # Extract product ID from URL or page
-            product_id = self._extract_product_id(url, soup)
-            if product_id:
-                product['sku_code'] = f"NORD-{product_id}"
             
             # Extract product title/name
             title = self._extract_title(soup)
@@ -112,15 +106,10 @@ class NordstromScraper:
             if brand:
                 product['brand'] = clean_text(brand)
             
-            # Extract SKU from product details
-            sku = self._extract_sku(soup)
-            if sku:
-                product['sku_code'] = sku
-            
-            # Extract Item # (Nordstrom's internal item number)
+            # Extract Item # (Nordstrom's SKU number) - this is the primary identifier
             item_number = self._extract_item_number(soup)
             if item_number:
-                product['item_number'] = item_number
+                product['sku_code'] = item_number
             
             # Extract additional description details
             description = self._extract_description(soup)
@@ -138,36 +127,7 @@ class NordstromScraper:
             logger.error(f"Error extracting product from {url}: {str(e)}")
             return None
     
-    def _extract_product_id(self, url: str, soup: BeautifulSoup) -> Optional[str]:
-        """Extract product ID from URL or page data."""
-        # Try URL first - check for /s/{slug}/{id} pattern
-        url_match = re.search(r'/s/[^/]+/(\d+)', url)
-        if url_match:
-            return url_match.group(1)
-        
-        # Try legacy /browse/ pattern
-        url_match = re.search(r'/browse/[^/]+/[^/]+/(\d+)', url)
-        if url_match:
-            return url_match.group(1)
-        
-        # Try data attributes
-        product_elem = soup.find(attrs={'data-product-id': True})
-        if product_elem:
-            return product_elem.get('data-product-id')
-        
-        # Try script tags with product data
-        scripts = soup.find_all('script', type='application/ld+json')
-        for script in scripts:
-            try:
-                data = json.loads(script.string)
-                if isinstance(data, dict) and 'productID' in data:
-                    return str(data['productID'])
-                if isinstance(data, dict) and 'sku' in data:
-                    return str(data['sku'])
-            except (json.JSONDecodeError, AttributeError):
-                continue
-        
-        return None
+    # Note: _extract_product_id method removed - we now use Item # as SKU, not product ID from URL
     
     def _extract_title(self, soup: BeautifulSoup) -> Optional[str]:
         """Extract product title."""
@@ -312,35 +272,7 @@ class NordstromScraper:
         
         return None
     
-    def _extract_sku(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract SKU code."""
-        # Try SKU selectors
-        sku_selectors = [
-            '[data-sku]',
-            '.product-sku',
-            '[data-testid="sku"]',
-            'span:contains("SKU")',
-            'span:contains("Style")'
-        ]
-        
-        for selector in sku_selectors:
-            if ':contains' in selector:
-                sku_elem = soup.find('span', string=re.compile('(SKU|Style)', re.I))
-                if sku_elem:
-                    parent = sku_elem.find_parent()
-                    if parent:
-                        text = parent.get_text()
-                        sku = extract_sku_from_text(text)
-                        if sku:
-                            return sku
-            else:
-                sku_elem = soup.select_one(selector)
-                if sku_elem:
-                    sku = sku_elem.get_text() or sku_elem.get('data-sku')
-                    if sku:
-                        return sku.strip()
-        
-        return None
+    # Note: _extract_sku method removed - we now use Item # as SKU via _extract_item_number
     
     def _extract_description(self, soup: BeautifulSoup) -> Optional[str]:
         """Extract product description."""

@@ -7,7 +7,7 @@ All notable changes to the Nordstrom scraper will be documented in this file.
 ### Added
 - Initial release of Nordstrom web scraper
 - Selenium support for JavaScript-rendered content
-- Product data extraction (SKU, Item #, color, type, brand, description)
+- Product data extraction (SKU, color, type, brand, description)
 - JSON and CSV export formats
 - Rate limiting and error handling
 - Data normalization and validation
@@ -16,10 +16,16 @@ All notable changes to the Nordstrom scraper will be documented in this file.
 
 ### Features
 - Multiple scraping methods (search, category, direct URLs)
-- Item # extraction from Nordstrom product pages
+- Item # extraction and use as SKU code (Nordstrom's official SKU)
 - Data normalization for colors and clothing types
 - Robust retry logic with exponential backoff
 - Configurable rate limiting
+
+### Changed
+- **SKU Code Format**: Now uses Nordstrom's Item # as the `sku_code` field
+  - Removed `NORD-{product_id}` format
+  - Removed separate `item_number` field
+  - Item # is Nordstrom's official SKU number
 
 ## Project Structure
 

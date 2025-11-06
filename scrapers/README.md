@@ -1,6 +1,8 @@
 # Nordstrom Web Scraper
 
-A comprehensive web scraping solution for extracting product data from Nordstrom's website. This scraper extracts SKU codes, item numbers, colors, clothing types, brands, and descriptions to populate the retailer SKU database.
+A comprehensive web scraping solution for extracting product data from Nordstrom's website. This scraper extracts SKU codes (Item #), colors, clothing types, brands, and descriptions to populate the retailer SKU database.
+
+**Note**: The `sku_code` field contains Nordstrom's Item #, which is their official SKU number.
 
 ## 📁 Project Structure
 

@@ -48,8 +48,7 @@ class DataExporter:
         formatted_products = []
         for product in products:
             formatted_product = {
-                'sku_code': product.get('sku_code', ''),
-                'item_number': product.get('item_number', ''),  # Nordstrom Item #
+                'sku_code': product.get('sku_code', ''),  # Item # (Nordstrom's SKU)
                 'color': product.get('color', ''),
                 'type': product.get('type', ''),
                 'brand': product.get('brand', 'Nordstrom'),
@@ -89,7 +88,7 @@ class DataExporter:
             logger.warning("No products to export")
             return filepath
         
-        fieldnames = ['sku_code', 'item_number', 'color', 'type', 'brand', 'description', 'url']
+        fieldnames = ['sku_code', 'color', 'type', 'brand', 'description', 'url']
         
         try:
             with open(filepath, 'w', newline='', encoding='utf-8') as f:
@@ -99,7 +98,6 @@ class DataExporter:
                 for product in products:
                     row = {
                         'sku_code': product.get('sku_code', ''),
-                        'item_number': product.get('item_number', ''),
                         'color': product.get('color', ''),
                         'type': product.get('type', ''),
                         'brand': product.get('brand', 'Nordstrom'),
