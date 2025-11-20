@@ -62,7 +62,6 @@ export const CameraUpload = ({ onAnalysisComplete }: CameraUploadProps) => {
           color: analysisData.color,
           type: analysisData.type,
           condition: analysisData.condition,
-          confidence_score: analysisData.confidence,
         });
 
       if (dbError) throw dbError;

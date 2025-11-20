@@ -133,13 +133,13 @@ const Index = () => {
             <div className="space-y-3">
               <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-primary"></span>
-                Confidence Score
+                Match Confidence Score
               </h3>
               <div className="text-sm text-muted-foreground space-y-2">
+                <p><strong className="text-foreground">Shown only for matched items</strong> - indicates how confident the system is that the clothing item matches the retailer SKU</p>
                 <p><strong className="text-foreground">90-100%:</strong> Excellent match - highly confident</p>
                 <p><strong className="text-foreground">70-89%:</strong> Good match - reliable</p>
-                <p><strong className="text-foreground">50-69%:</strong> Fair match - review recommended</p>
-                <p><strong className="text-foreground">Below 50%:</strong> Low confidence - manual review needed</p>
+                <p><strong className="text-foreground">Below 70%:</strong> Manual review recommended</p>
               </div>
             </div>
 
@@ -203,7 +203,7 @@ const Index = () => {
                       type={item.type || undefined}
                       condition={item.condition || undefined}
                       matchedSku={item.matched_retailer_sku || undefined}
-                      confidence={item.confidence_score || undefined}
+                      confidence={item.matched_retailer_sku ? (item.confidence_score || undefined) : undefined}
                       onDelete={() => handleDeleteItem(item.id)}
                     />
                   ))}
@@ -251,7 +251,6 @@ const Index = () => {
                       type={item.type || undefined}
                       condition={item.condition || undefined}
                       matchedSku={item.matched_retailer_sku || undefined}
-                      confidence={item.confidence_score || undefined}
                       onDelete={() => handleDeleteItem(item.id)}
                     />
                   ))}
@@ -316,7 +315,7 @@ const Index = () => {
                               type={item.type || undefined}
                               condition={item.condition || undefined}
                               matchedSku={item.matched_retailer_sku || undefined}
-                              confidence={item.confidence_score || undefined}
+                              confidence={item.matched_retailer_sku ? (item.confidence_score || undefined) : undefined}
                               onDelete={() => handleDeleteItem(item.id)}
                             />
                           ))}

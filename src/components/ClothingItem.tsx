@@ -77,9 +77,9 @@ export const ClothingItem = ({
           )}
         </div>
 
-        {confidence && (
+        {matchedSku && confidence && (
           <div className="text-xs text-muted-foreground">
-            Confidence: {(confidence * 100).toFixed(0)}%
+            Match Confidence: {(confidence * 100).toFixed(0)}%
           </div>
         )}
 
