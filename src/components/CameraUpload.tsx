@@ -45,13 +45,51 @@ export const CameraUpload = ({ onAnalysisComplete }: CameraUploadProps) => {
         .from('clothing-images')
         .getPublicUrl(filePath);
 
-      // Analyze the image
-      const { data: analysisData, error: analysisError } = await supabase.functions.invoke(
-        'analyze-clothing',
-        { body: { imageUrl: publicUrl } }
-      );
+      console.log('Calling analyze-clothing function with image URL:', publicUrl);
 
-      if (analysisError) throw analysisError;
+      // Analyze the image
+      let analysisData;
+      let analysisError;
+      
+      try {
+        const result = await supabase.functions.invoke(
+          'analyze-clothing',
+          { 
+            body: { imageUrl: publicUrl },
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          }
+        );
+        
+        analysisData = result.data;
+        analysisError = result.error;
+      } catch (invokeError) {
+        console.error('Function invoke exception:', invokeError);
+        // Handle network errors or other exceptions
+        if (invokeError instanceof TypeError && invokeError.message.includes('fetch')) {
+          throw new Error('Network error: Unable to reach the analysis service. Please check your internet connection and ensure the edge function is deployed.');
+        }
+        throw invokeError;
+      }
+
+      if (analysisError) {
+        console.error('Edge function error:', analysisError);
+        // Check if it's a network/connection error
+        if (analysisError.message?.includes('Failed to send') || 
+            analysisError.message?.includes('fetch') ||
+            analysisError.message?.includes('NetworkError') ||
+            analysisError.message?.includes('Failed to fetch')) {
+          throw new Error('Network error: Unable to reach the analysis service. Please check your internet connection and ensure the edge function is deployed.');
+        }
+        throw new Error(analysisError.message || 'Failed to analyze image. Please ensure the edge function is deployed.');
+      }
+
+      if (!analysisData) {
+        throw new Error('No data returned from analysis');
+      }
+
+      console.log('Analysis result:', analysisData);
 
       // Save to database
       const { error: dbError } = await supabase
@@ -76,9 +114,22 @@ export const CameraUpload = ({ onAnalysisComplete }: CameraUploadProps) => {
       setPreviewUrl(null);
     } catch (error) {
       console.error('Error processing image:', error);
+      
+      // Provide more specific error messages
+      let errorMessage = "Failed to process image";
+      if (error instanceof Error) {
+        if (error.message.includes('edge function') || error.message.includes('Failed to send')) {
+          errorMessage = "Failed to connect to analysis service. Please check if the edge function is deployed and try again.";
+        } else if (error.message.includes('storage')) {
+          errorMessage = "Failed to upload image. Please try again.";
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to process image",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
