@@ -79,35 +79,82 @@ export const SKUManager = ({ onSkusUploaded }: SKUManagerProps) => {
       });
 
       // Call the scrape-nordstrom Edge Function
-      const { data, error } = await supabase.functions.invoke('scrape-nordstrom', {
-        body: {
-          category_url: 'https://www.nordstrom.com/browse/women/dresses',
-          max_products: 50,
-        },
-      });
+      console.log('Calling scrape-nordstrom function...');
 
-      if (error) throw error;
+      let scrapeData;
+      let scrapeError;
 
-      if (data.error) {
+      try {
+        const result = await supabase.functions.invoke('scrape-nordstrom', {
+          body: {
+            category_url: 'https://www.nordstrom.com/browse/women/dresses',
+            max_products: 50,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+
+        scrapeData = result.data;
+        scrapeError = result.error;
+      } catch (invokeError) {
+        console.error('Function invoke exception:', invokeError);
+        if (invokeError instanceof TypeError && invokeError.message.includes('fetch')) {
+          throw new Error('Network error: Unable to reach the scraping service. Please check your internet connection and ensure the edge function is deployed.');
+        }
+        throw invokeError;
+      }
+
+      if (scrapeError) {
+        console.error('Edge function error:', scrapeError);
+        if (scrapeError.message?.includes('Failed to send') ||
+            scrapeError.message?.includes('fetch') ||
+            scrapeError.message?.includes('NetworkError') ||
+            scrapeError.message?.includes('Failed to fetch')) {
+          throw new Error('Network error: Unable to reach the scraping service. Please check your internet connection and ensure the edge function is deployed.');
+        }
+        throw new Error(scrapeError.message || 'Failed to scrape Nordstrom. Please ensure the edge function is deployed.');
+      }
+
+      if (!scrapeData) {
+        throw new Error('No data returned from scraping service');
+      }
+
+      if (scrapeData.error) {
         toast({
           title: "Scraping limitation",
-          description: data.error + (data.suggestion ? ` ${data.suggestion}` : ''),
+          description: scrapeData.error + (scrapeData.suggestion ? ` ${scrapeData.suggestion}` : ''),
           variant: "destructive",
         });
         return;
       }
 
+      console.log('Scrape result:', scrapeData);
+
       toast({
         title: "Scraping complete!",
-        description: `Scraped ${data.scraped} products and matched ${data.matched} items`,
+        description: `Scraped ${scrapeData.scraped || 0} products and matched ${scrapeData.matched || 0} items`,
       });
 
       onSkusUploaded();
     } catch (error) {
       console.error('Error scraping Nordstrom:', error);
+      
+      // Provide more specific error messages
+      let errorMessage = "Failed to scrape Nordstrom";
+      if (error instanceof Error) {
+        if (error.message.includes('edge function') || error.message.includes('Failed to send')) {
+          errorMessage = "Failed to connect to scraping service. Please check if the edge function is deployed and try again.";
+        } else if (error.message.includes('Network')) {
+          errorMessage = error.message;
+        } else {
+          errorMessage = error.message || "The website may require JavaScript rendering.";
+        }
+      }
+
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to scrape Nordstrom. The website may require JavaScript rendering.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -119,21 +166,76 @@ export const SKUManager = ({ onSkusUploaded }: SKUManagerProps) => {
     setIsMatching(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke('match-skus');
+      console.log('Calling match-skus function...');
 
-      if (error) throw error;
+      let matchData;
+      let matchError;
+
+      try {
+        const result = await supabase.functions.invoke('match-skus', {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+
+        matchData = result.data;
+        matchError = result.error;
+      } catch (invokeError) {
+        console.error('Function invoke exception:', invokeError);
+        // Handle network errors or other exceptions
+        if (invokeError instanceof TypeError && invokeError.message.includes('fetch')) {
+          throw new Error('Network error: Unable to reach the matching service. Please check your internet connection and ensure the edge function is deployed.');
+        }
+        throw invokeError;
+      }
+
+      if (matchError) {
+        console.error('Edge function error:', matchError);
+        // Check if it's a network/connection error
+        if (matchError.message?.includes('Failed to send') ||
+            matchError.message?.includes('fetch') ||
+            matchError.message?.includes('NetworkError') ||
+            matchError.message?.includes('Failed to fetch')) {
+          throw new Error('Network error: Unable to reach the matching service. Please check your internet connection and ensure the edge function is deployed.');
+        }
+        throw new Error(matchError.message || 'Failed to match SKUs. Please ensure the edge function is deployed.');
+      }
+
+      if (!matchData) {
+        throw new Error('No data returned from matching service');
+      }
+
+      // Handle the case where the response has an error field
+      if (matchData.error) {
+        throw new Error(matchData.error);
+      }
+
+      console.log('Match result:', matchData);
 
       toast({
         title: "Matching complete!",
-        description: `Matched ${data.matched} out of ${data.total} items`,
+        description: `Matched ${matchData.matched || 0} out of ${matchData.total || 0} items`,
       });
 
       onSkusUploaded();
     } catch (error) {
       console.error('Error matching SKUs:', error);
+      
+      // Provide more specific error messages
+      let errorMessage = "Failed to match SKUs";
+      if (error instanceof Error) {
+        if (error.message.includes('edge function') || error.message.includes('Failed to send')) {
+          errorMessage = "Failed to connect to matching service. Please check if the edge function is deployed and try again.";
+        } else if (error.message.includes('Network')) {
+          errorMessage = error.message;
+        } else {
+          errorMessage = error.message;
+        }
+      }
+
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to match SKUs",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
