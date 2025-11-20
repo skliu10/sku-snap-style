@@ -98,7 +98,6 @@ async function scrapeNordstromProduct(url: string): Promise<NordstromProduct | n
     
     const doc = new DOMParser().parseFromString(html, "text/html");
     
-    if (!doc) {
     if (!doc || !doc.documentElement) {
       throw new Error("Failed to parse HTML - document is null or invalid");
     }
